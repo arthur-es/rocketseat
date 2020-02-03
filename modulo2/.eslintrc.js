@@ -23,4 +23,5 @@ module.exports = {
         "no-unused-vars": ["error", { "argsIgnorePatter": "next" }],
 
     },
+
 };
