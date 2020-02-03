@@ -17,15 +17,15 @@ class User extends Model {
     );
     this.addHook('beforeSave', async user => {
       if (user.password) {
-        console.log('Encriptando a senha...');
-
         user.password_hash = await bcrypt.hash(user.password, 8);
-      } else {
-        console.log('Não encriptou');
       }
     });
 
     return this;
+  }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
   }
 }
 
