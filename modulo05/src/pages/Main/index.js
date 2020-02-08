@@ -1,9 +1,9 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import { Title } from './styles';
 
 export default function Main() {
   return (
-    <h1>Main page</h1>
+    <Title>Main page</Title>
   );
 }
