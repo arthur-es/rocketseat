@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 
-
 export default createGlobalStyle`
   body {
     background-color: #7159c1;
@@ -12,6 +11,8 @@ export default createGlobalStyle`
     margin: 0px;
     box-sizing: border-box;
     outline: 0;
+    -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   }
 
   html,body, #root {
