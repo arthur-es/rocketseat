@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import api from '../../services/api'
 
-import { FaGithubAlt, FaPlus } from 'react-icons/fa'
+import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
 import { Container, Form, SubmitButton } from './styles';
 
 
 export default class Main extends Component {
   state = {
     newRepo: '',
-    repositories: []
+    repositories: [],
+    loading: false
   }
 
   handleInputChange = e => {
@@ -20,8 +21,11 @@ export default class Main extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     console.log("Iniciando chamada a API do GitHub...")
-    const { newRepo, repositories } = this.state;
+    const { newRepo, repositories, loading } = this.state;
 
+    this.setState({
+      loading: true
+    })
     const response = await api.get(`/repos/${newRepo}`)
 
     const data = {
@@ -30,7 +34,8 @@ export default class Main extends Component {
 
     this.setState({
       repositories: [...repositories, data],
-      newRepo: ''
+      newRepo: '',
+      loading: false
     })
   }
 
@@ -50,8 +55,10 @@ export default class Main extends Component {
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton>
-            <FaPlus />
+          <SubmitButton loading={this.state.loading}>
+            {
+              this.state.loading ? <FaSpinner size={14} /> : <FaPlus size={14} />
+            }
           </SubmitButton>
         </Form>
       </Container >
