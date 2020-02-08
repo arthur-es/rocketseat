@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import api from '../../services/api'
 
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
-import { Container, Form, SubmitButton } from './styles';
+import { Container, Form, SubmitButton, List } from './styles';
 
 
 export default class Main extends Component {
@@ -20,26 +20,35 @@ export default class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    console.log("Iniciando chamada a API do GitHub...")
-    const { newRepo, repositories, loading } = this.state;
+    const { newRepo, repositories } = this.state;
 
     this.setState({
       loading: true
     })
-    const response = await api.get(`/repos/${newRepo}`)
+    try {
+      const response = await api.get(`/repos/${newRepo}`)
+      this.setState({
+        loading: false
+      })
+      const data = {
+        name: response.data.full_name
+      }
 
-    const data = {
-      name: response.data.full_name
+      this.setState({
+        repositories: [...repositories, data],
+        newRepo: '',
+        loading: false
+      })
+
+    } catch (err) {
+      console.error(err);
     }
-
-    this.setState({
-      repositories: [...repositories, data],
-      newRepo: '',
-      loading: false
-    })
   }
 
   render() {
+    const { newRepo, loading, repositories } = this.state;
+
+
     return (
       <Container>
         <h1>
@@ -51,16 +60,29 @@ export default class Main extends Component {
           <input
             type="text"
             placeholder="Nome do repositório"
-            value={this.state.newRepo}
+            value={newRepo}
             onChange={this.handleInputChange}
           />
 
-          <SubmitButton loading={this.state.loading}>
+          <SubmitButton loading={loading.toString()}>
             {
-              this.state.loading ? <FaSpinner size={14} /> : <FaPlus size={14} />
+              loading ? (<FaSpinner size={14} />) : (<FaPlus size={14} />)
             }
           </SubmitButton>
         </Form>
+
+        <List>
+          {repositories.map(repository => {
+            return <li key={repository.name}>
+              <span>
+                {repository.name}
+              </span>
+              <a href="">Detalhes</a>
+            </li>
+          })}
+        </List>
+
+
       </Container >
     );
   }

@@ -51,7 +51,7 @@ const rotate = keyframes`
 export const SubmitButton = styled.button.attrs(props => (
   {
     type: 'submit',
-    disabled: props.loading
+    disabled: props.loading === 'true'
   }
 ))`
   background-color: #7159c1;
@@ -70,10 +70,35 @@ export const SubmitButton = styled.button.attrs(props => (
     opacity: 0.6;
   }
 
-  ${props => props.loading && css`
+  ${props => props.loading === 'true' && css`
     svg {
       animation: ${rotate} 2s linear infinite;
     }
   `}
+
+`
+
+
+export const List = styled.ul`
+  margin-top: 30px;
+  list-style: none;
+
+  li {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+
+    a {
+      text-decoration: none;
+      color: #7159c1;
+    }
+
+  }
 
 `
