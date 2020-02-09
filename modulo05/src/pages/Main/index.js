@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import api from '../../services/api'
 
-import Container from '../../components/Container'
-
-import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
 import { Form, SubmitButton, List } from './styles';
+import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa'
+
+import Container from '../../components/Container'
 
 
 export default class Main extends Component {
@@ -67,13 +67,12 @@ export default class Main extends Component {
   render() {
     const { newRepo, loading, repositories } = this.state;
 
-
     return (
       <Container>
         <h1>
-          <FaGithubAlt />
+          <FaGithubAlt size="2.2rem" color="#0a090c" />
           Repositórios
-          </h1>
+        </h1>
         <Form onSubmit={this.handleSubmit}>
 
           <input

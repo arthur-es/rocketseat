@@ -1,8 +1,5 @@
 import styled, { keyframes, css } from 'styled-components'
 
-
-
-
 export const Form = styled.form`
   margin-top: 30px;
   display: flex;
@@ -15,7 +12,6 @@ export const Form = styled.form`
     padding: 10px 15px;
     border: 1px solid #eee;
   }
-
 
 `
 
