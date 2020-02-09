@@ -1,3 +1,12 @@
+# Repository Issues App
+This app is really useful to save your favorite issues!
+You just need to write down the owner/repoName and you'll get back all the issues information for that repository.
+
+Try it on [https://repositoryissues.arthures.codes](https://repositoryissues.arthures.codes)
+> This app was made with only one goal in mind: learn ReactJS.
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
