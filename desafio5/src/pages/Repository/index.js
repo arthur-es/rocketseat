@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import Container from '../../components/Container'
 
-import { Loading, Owner, IssuesList } from './styles'
+import { Loading, Owner, IssuesList, Select, Navigation } from './styles'
 
 export default class Repository extends Component {
   static propTypes = {
@@ -19,11 +19,15 @@ export default class Repository extends Component {
   state = {
     loading: true,
     repository: {},
-    issues: []
+    issues: [],
+    issueState: 'all',
+    page: 1,
+    hasPreviousPage: false
   }
 
   async componentDidMount() {
     const { match } = this.props;
+    const { issueState, page } = this.state;
 
     const repoName = decodeURIComponent(match.params.repository)
 
@@ -31,8 +35,8 @@ export default class Repository extends Component {
       api.get(`/repos/${repoName}`),
       api.get(`/repos/${repoName}/issues`, {
         params: {
-          state: 'open',
-          per_page: 5
+          state: issueState,
+          per_page: 30
         }
       })
     ])
@@ -44,9 +48,55 @@ export default class Repository extends Component {
     })
 
   }
+
+  handleSelectChange = async e => {
+    await this.setState({
+      issueState: e.target.value.toString()
+    });
+    const { issueState } = this.state;
+    console.log("IssueState: ", issueState);
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+    // try {
+    //   const response = await api.get(`/repos/${repoName}/issues`, {
+    //     params: {
+    //       state: issueState
+    //     }
+    //   })
+    //   console.log('Response: ', response);
+    //   this.setState({
+    //     issues: response.data
+    //   });
+    // } catch (err) {
+    //   console.log("Error: ", err);
+    // }
+  }
+
+  handleNextPage = async e => {
+    const { page } = this.state;
+    console.log("Next page...")
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+      hasPreviousPage: true
+    }))
+  }
+
+  handlePreviousPage = async e => {
+    console.log("Previous page...")
+    const { page } = this.state;
+    if (page <= 0) {
+      this.setState({ hasPreviousPage: false, page: 1 })
+    } else {
+      this.setState((prevState) => ({
+        page: prevState - 1
+      }))
+    }
+  }
+
+
   render() {
 
-    const { loading, repository, issues } = this.state
+    const { loading, repository, issues, issueState } = this.state;
 
     if (loading) {
       return <Loading>Carregando</Loading>
@@ -59,6 +109,22 @@ export default class Repository extends Component {
           <h1>{repository.name}</h1>
           <p>{repository.description}</p>
         </Owner>
+        <div className="repositoryOptionsWrapper">
+          <Navigation>
+            <h3>Navegação</h3>
+            <button onClick={this.handlePreviousPage}>Voltar</button>
+            <button onClick={this.handleNextPage}>Próxima</button>
+          </Navigation>
+          <Select
+            name="issueOptions"
+            value={issueState}
+            onChange={this.handleSelectChange}
+          >
+            <option value="all" >Todas</option>
+            <option value="open" >Abertas</option>
+            <option value="closed" >Fechadas</option>
+          </Select>
+        </div>
 
         <IssuesList>
           {

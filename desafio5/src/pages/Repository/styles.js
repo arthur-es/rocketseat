@@ -109,3 +109,12 @@ export const Owner = styled.header`
   }
 
 `
+
+export const Select = styled.select`
+  border: 1px solid #eee;
+  padding: 7px;
+`
+
+export const Navigation = styled.div`
+
+`

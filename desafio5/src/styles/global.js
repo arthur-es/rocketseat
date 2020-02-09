@@ -29,4 +29,11 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 
+  .repositoryOptionsWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+  }
+
 `;
