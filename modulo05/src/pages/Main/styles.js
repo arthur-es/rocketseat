@@ -1,26 +1,7 @@
 import styled, { keyframes, css } from 'styled-components'
 
 
-export const Container = styled.div`
-  max-width: 700px;
-  margin: 80px auto;
-  background-color: white;
-  border-radius: 4px;
-  padding: 30px;
-  box-shadow: 0 0 20px rgb(0,0,0,0.1);
 
-  h1 {
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-
-`
 
 export const Form = styled.form`
   margin-top: 30px;
