@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 export const Loading = styled.div`
   color: white;
@@ -130,10 +130,14 @@ export const Navigation = styled.div`
     margin-left: 5px;
   }
 
-  .noPreviousPage {
+  &.noPreviousPage {
     background-color: grey;
-    color: red;
-    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  &.loadingIssues {
+    background-color: grey;
+    cursor: not-allowed;
   }
 
 

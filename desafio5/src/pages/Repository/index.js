@@ -25,18 +25,20 @@ export default class Repository extends Component {
     hasPreviousPage: false
   }
 
+
   async componentDidMount() {
     const { match } = this.props;
     const { issueState, page } = this.state;
 
-    const repoName = decodeURIComponent(match.params.repository)
+    const repoName = decodeURIComponent(match.params.repository);
 
     const [repository, issues] = await Promise.all([
       api.get(`/repos/${repoName}`),
       api.get(`/repos/${repoName}/issues`, {
         params: {
           state: issueState,
-          per_page: 30
+          per_page: 30,
+          page: page
         }
       })
     ])
@@ -54,29 +56,27 @@ export default class Repository extends Component {
       issueState: e.target.value.toString()
     });
     const { issueState } = this.state;
-    console.log("IssueState: ", issueState);
     const { match } = this.props;
     const repoName = decodeURIComponent(match.params.repository);
-    // try {
-    //   const response = await api.get(`/repos/${repoName}/issues`, {
-    //     params: {
-    //       state: issueState
-    //     }
-    //   })
-    //   console.log('Response: ', response);
-    //   this.setState({
-    //     issues: response.data
-    //   });
-    // } catch (err) {
-    //   console.log("Error: ", err);
-    // }
+    try {
+      const response = await api.get(`/repos/${repoName}/issues`, {
+        params: {
+          state: issueState
+        }
+      })
+      this.setState({
+        issues: response.data
+      });
+    } catch (err) {
+      console.log("Error: ", err);
+    }
   }
 
   updatePage = async () => {
-    console.log("Updating issues...");
     const { match } = this.props;
     const repoName = decodeURIComponent(match.params.repository);
     const { issueState, page } = this.state;
+
 
     try {
       const response = await api.get(`/repos/${repoName}/issues`, {
@@ -93,16 +93,22 @@ export default class Repository extends Component {
       }));
     } catch (err) {
       console.log(err);
+    } finally {
+      if (this.state.page > 1) {
+        this.setState({
+          hasPreviousPage: true
+        })
+      }
     }
+
+
 
 
   }
 
   handleNextPage = async e => {
-    console.log("Next page...")
     this.setState((prevState) => ({
       page: prevState.page + 1,
-      hasPreviousPage: true
     }))
 
     this.updatePage();
@@ -110,19 +116,18 @@ export default class Repository extends Component {
   }
 
   handlePreviousPage = async e => {
-    console.log("Previous page...");
 
     if (this.state.page > 1) {
       this.setState((prevState) => ({
-        page: prevState.page - 1
+        page: prevState.page - 1,
+        hasPreviousPage: true
       }))
+      this.updatePage();
     } else {
       this.setState((prevState) => ({
         hasPreviousPage: false
-      }));
+      }))
     }
-
-    this.updatePage();
 
   }
 
