@@ -72,16 +72,45 @@ export default class Repository extends Component {
     // }
   }
 
+  updatePage = async () => {
+    console.log("Updating issues...");
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+    const { issueState, page } = this.state;
+
+    try {
+      const response = await api.get(`/repos/${repoName}/issues`, {
+        params: {
+          state: issueState,
+          per_page: 30,
+          page: page
+        }
+      });
+
+
+      this.setState(() => ({
+        issues: response.data
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+
+
+  }
+
   handleNextPage = async e => {
     console.log("Next page...")
     this.setState((prevState) => ({
       page: prevState.page + 1,
       hasPreviousPage: true
     }))
+
+    this.updatePage();
+
   }
 
   handlePreviousPage = async e => {
-    console.log("Previous page...")
+    console.log("Previous page...");
 
     if (this.state.page > 1) {
       this.setState((prevState) => ({
@@ -92,6 +121,9 @@ export default class Repository extends Component {
         hasPreviousPage: false
       }));
     }
+
+    this.updatePage();
+
   }
 
 
@@ -118,6 +150,7 @@ export default class Repository extends Component {
               className={hasPreviousPage ? null : 'noPreviousPage'} >Voltar</button>
             <button onClick={this.handleNextPage}>Próxima</button>
           </Navigation>
+
           <Select
             name="issueOptions"
             value={issueState}
