@@ -12,7 +12,8 @@ export default class Main extends Component {
   state = {
     newRepo: '',
     repositories: [],
-    loading: false
+    loading: false,
+    hasInputError: false
   }
 
   componentDidMount() {
@@ -33,7 +34,8 @@ export default class Main extends Component {
 
   handleInputChange = e => {
     this.setState({
-      newRepo: e.target.value
+      newRepo: e.target.value,
+      hasInputError: false
     })
   }
 
@@ -45,10 +47,12 @@ export default class Main extends Component {
       loading: true
     })
     try {
+
+      const repoExists = repositories.find(repo => repo.name === newRepo);
+      if (repoExists) throw new Error('Repositório duplicado');
+
       const response = await api.get(`/repos/${newRepo}`)
-      this.setState({
-        loading: false
-      })
+
       const data = {
         name: response.data.full_name
       }
@@ -56,16 +60,21 @@ export default class Main extends Component {
       this.setState({
         repositories: [...repositories, data],
         newRepo: '',
-        loading: false
+
       })
 
     } catch (err) {
-      console.error(err);
+      console.log("Catch --> ", err);
+      this.setState({
+        hasInputError: true
+      });
+    } finally {
+      this.setState({ loading: false })
     }
   }
 
   render() {
-    const { newRepo, loading, repositories } = this.state;
+    const { newRepo, loading, repositories, hasInputError } = this.state;
 
     return (
       <Container>
@@ -73,7 +82,7 @@ export default class Main extends Component {
           <FaGithubAlt size="2.2rem" color="#0a090c" />
           Repositórios
         </h1>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} hasInputError={hasInputError}>
 
           <input
             type="text"
