@@ -1,13 +1,20 @@
 # Repository Issues App
-This app is really useful to save your favorite issues!
-You just need to write down the owner/repoName and you'll get back all the issues information for that repository.
+- This app is really useful to save your favorite issues!
+- You just need to write down the owner/repoName and you'll get back all the issues information for that repository.
 
 Try it on [https://repositoryissues.arthures.codes](https://repositoryissues.arthures.codes)
 > This app was made with only one goal in mind: learn ReactJS.
 
 
+## Adding a new repository:
+![Adding a new repository](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/adding_a_repo.gif](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/adding_a_repo.gif)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## You cannot add a non-existent repository or add a duplicate one:
+![You can't add an non existant repository or add a repeated one](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/errors.gif)
+
+
+
+
 
 ## Available Scripts
 
