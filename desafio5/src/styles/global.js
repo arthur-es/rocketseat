@@ -34,6 +34,7 @@ export default createGlobalStyle`
     display: flex;
     justify-content: space-between;
     padding-top: 30px;
+    align-items: center;
   }
 
 `;

@@ -73,7 +73,6 @@ export default class Repository extends Component {
   }
 
   handleNextPage = async e => {
-    const { page } = this.state;
     console.log("Next page...")
     this.setState((prevState) => ({
       page: prevState.page + 1,
@@ -83,20 +82,22 @@ export default class Repository extends Component {
 
   handlePreviousPage = async e => {
     console.log("Previous page...")
-    const { page } = this.state;
-    if (page <= 0) {
-      this.setState({ hasPreviousPage: false, page: 1 })
+
+    if (this.state.page > 1) {
+      this.setState((prevState) => ({
+        page: prevState.page - 1
+      }))
     } else {
       this.setState((prevState) => ({
-        page: prevState - 1
-      }))
+        hasPreviousPage: false
+      }));
     }
   }
 
 
   render() {
 
-    const { loading, repository, issues, issueState } = this.state;
+    const { loading, repository, issues, issueState, page, hasPreviousPage } = this.state;
 
     if (loading) {
       return <Loading>Carregando</Loading>
@@ -111,8 +112,10 @@ export default class Repository extends Component {
         </Owner>
         <div className="repositoryOptionsWrapper">
           <Navigation>
-            <h3>Navegação</h3>
-            <button onClick={this.handlePreviousPage}>Voltar</button>
+            <h3>Página: {page}</h3>
+            <button
+              onClick={this.handlePreviousPage}
+              className={hasPreviousPage ? null : 'noPreviousPage'} >Voltar</button>
             <button onClick={this.handleNextPage}>Próxima</button>
           </Navigation>
           <Select

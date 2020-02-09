@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const Loading = styled.div`
   color: white;
@@ -69,10 +69,6 @@ export const IssuesList = styled.ul`
     }
   }
 
-
-
-
-
 `
 
 export const Owner = styled.header`
@@ -113,8 +109,34 @@ export const Owner = styled.header`
 export const Select = styled.select`
   border: 1px solid #eee;
   padding: 7px;
+  max-height: 30px;
 `
 
 export const Navigation = styled.div`
+  h3 {
+    color: black;
+    margin-bottom: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  button {
+    border: none;
+    background-color: #7159c1;
+    border-radius: 4px;
+    color: white;
+    padding: 7px 15px;
+    box-shadow: 0px 0px 2px 0px rgb(162, 162, 233);
+
+  & + button {
+    margin-left: 5px;
+  }
+
+  .noPreviousPage {
+    background-color: grey;
+    color: red;
+    box-shadow: none;
+  }
+
+
+  }
 
 `
