@@ -7,7 +7,7 @@ Try it on [https://repositoryissues.arthures.codes](https://repositoryissues.art
 
 
 ## Adding a new repository:
-![Adding a new repository](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/adding_a_repo.gif](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/adding_a_repo.gif)
+![Adding a new repository](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/adding_a_repo.gif)
 
 ## You cannot add a non-existent repository or add a duplicate one:
 ![You can't add an non existant repository or add a repeated one](https://raw.githubusercontent.com/arthur-es/rocketseat/master/desafio5/repo_presentation/errors.gif)
